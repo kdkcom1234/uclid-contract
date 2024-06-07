@@ -41,14 +41,6 @@ const txn = await token.mint("uclid13hpygej3jglqfeuzs8laurlaak4tmrrgf9myny", {
 });
 const receipt = await txn.wait();
 
-// totalSupply
-const totalSupply = await token.totalSupply();
-
-// total balance of contract
-const balance = await ethers.provider.getBalance(
-  "0x5FbDB2315678afecb367f032d93F642f64180aa3"
-);
-
 // get token uri
 const uri = await token.tokenURI(1);
 
@@ -57,6 +49,34 @@ const res = await fetch(uri);
 const meta = await res.json();
 console.log(meta);
 console.log(meta.image);
+
+// totalSupply
+const totalSupply = await token.totalSupply();
+
+// total balance of contract
+const balance = await ethers.provider.getBalance(
+  "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+);
+
+// withdraw balance of contract
+const ProbeNode = await ethers.getContractFactory("ProbeNode");
+const probeNode = await ProbeNode.attach(
+  "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+);
+const [owner] = await ethers.getSigners();
+const tx = await probeNode
+  .connect(owner)
+  .withdraw(
+    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    ethers.parseEther("0.003").toString()
+  );
+const receipt = await tx.wait();
+console.log(receipt);
+
+const balance1 = await ethers.provider.getBalance(
+  "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+);
+console.log(balance);
 ```
 
 ## deploy to test network
