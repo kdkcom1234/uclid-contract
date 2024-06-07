@@ -9,7 +9,7 @@ npx hardhat test ./test/ProbeNode.js
 
 ```shell
 npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/NFTTrial.js --network localhost
+npx hardhat ignition deploy ./ignition/modules/ProbeNode.js --network localhost
 # 0x5FbDB2315678afecb367f032d93F642f64180aa3
 ```
 
@@ -25,7 +25,7 @@ npx hardhat console --network localhost
 // >
 // create object of token contract
 const token = await ethers.getContractAt(
-  "contracts/NFTTrial.sol:NFTTrial",
+  "contracts/ProbeNode.sol:ProbeNode",
   "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 );
 
@@ -34,17 +34,23 @@ const owner = await token.owner();
 console.log(owner.toString());
 
 // mint
-// await token.mint("[trait-sequence]")
-const txn = await token.mint("0-0-0-0-0-0-0-0-0-0-0-0-0");
+// await token.mint("uclid1....address", {value: parseEther("0.001") })
+const { ethers } = require("hardhat");
+const txn = await token.mint("uclid13hpygej3jglqfeuzs8laurlaak4tmrrgf9myny", {
+  value: ethers.parseEther("0.001").toString(),
+});
 const receipt = await txn.wait();
 
 // totalSupply
 const totalSupply = await token.totalSupply();
 
-// get token full uri from address
-const uri = await token.tokenURIByAddress(
-  "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+// total balance of contract
+const balance = await ethers.provider.getBalance(
+  "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 );
+
+// get token uri
+const uri = await token.tokenURI(1);
 
 // fetch meta
 const res = await fetch(uri);
@@ -56,7 +62,7 @@ console.log(meta.image);
 ## deploy to test network
 
 ```shell
-npx hardhat ignition deploy ./ignition/modules/NFTTrial.js --network amoy
-# 0xF684e90593190D5A4b50367231ba1899A77128ac
-# https://www.oklink.com/ko/amoy/address/0xF684e90593190D5A4b50367231ba1899A77128ac
+npx hardhat ignition deploy ./ignition/modules/ProbeNode.js --network amoy
+# 0x79000DB323bd105dff47e1dd4b706305292Ee4c4
+# https://www.oklink.com/ko/amoy/address/0x79000DB323bd105dff47e1dd4b706305292Ee4c4
 ```
