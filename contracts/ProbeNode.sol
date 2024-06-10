@@ -98,12 +98,10 @@ contract ProbeNode is ERC721URIStorage, Ownable, ReentrancyGuard {
         _burn(tokenId);
         _burnedTokensCounter += 1;
 
-        // Remove token from allTokens array
         for (uint256 i = 0; i < allTokens.length; i++) {
             if (allTokens[i].id == tokenId) {
-                allTokens[i] = allTokens[allTokens.length - 1];
-                allTokens.pop();
-                break;
+                allTokens[i].addr = address(0);
+                allTokens[i].opsAddr = "";
             }
         }
     }

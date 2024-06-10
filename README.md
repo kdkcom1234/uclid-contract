@@ -83,6 +83,6 @@ console.log(balance);
 
 ```shell
 npx hardhat ignition deploy ./ignition/modules/ProbeNode.js --network amoy
-# 0x79000DB323bd105dff47e1dd4b706305292Ee4c4
-# https://www.oklink.com/ko/amoy/address/0x79000DB323bd105dff47e1dd4b706305292Ee4c4
+# 0x37300F3adbB637FE05561e589eA9AD832ed80539
+# https://www.oklink.com/ko/amoy/address/0x37300F3adbB637FE05561e589eA9AD832ed80539
 ```
